@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class checkStatusActivity extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class checkStatusActivity extends AppCompatActivity {
         ArrayList<String> displayMessage = new ArrayList<>();
 
         /* for get IPs */
-        displayMessage.add("IPs");
+        displayMessage.add("> IPs");
         try{
             for(Enumeration<NetworkInterface> networkInterfaceEnum = NetworkInterface.getNetworkInterfaces();
                     networkInterfaceEnum.hasMoreElements();)
@@ -57,7 +58,7 @@ public class checkStatusActivity extends AppCompatActivity {
             Log.d("getItems",ex.toString());
         }
 
-        displayMessage.add("Routes");
+        displayMessage.add("> Routes");
         /* for get Routes */
         /* for over API level 20
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -140,15 +141,17 @@ public class checkStatusActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        displayMessage.add("Rule and Routes");
+        displayMessage.add("> > Rule and Routes");
         displayMessage.addAll(getRoutes());
-        displayMessage.add("Rule6 and Routes6");
+        displayMessage.add("> > Rule6 and Routes6");
         displayMessage.addAll(getRoutes6());
         return displayMessage;
     }
 
     public ArrayList<String> getRoutes(){
-        ArrayList<String> ruleList = new ArrayList<>();
+        //ArrayList<String> ruleList = new ArrayList<>();
+        //重複するruleを排除するため、LinkedHashSetを使う。
+        LinkedHashSet<String> ruleList = new LinkedHashSet<>();
         ArrayList<String> routeList = new ArrayList<>();
 
         try { //ip rule list
@@ -186,7 +189,7 @@ public class checkStatusActivity extends AppCompatActivity {
             // Executes the command.
             for(String rule: ruleList)
             {
-                routeList.add("Rule Table " + rule);
+                routeList.add("> > > Rule Table " + rule);
 
                 Process process = Runtime.getRuntime().exec("/system/bin/ip route show table " + rule);
 
@@ -217,7 +220,9 @@ public class checkStatusActivity extends AppCompatActivity {
         return routeList;
     }
     public ArrayList<String> getRoutes6(){
-        ArrayList<String> ruleList = new ArrayList<>();
+        //ArrayList<String> ruleList = new ArrayList<>();
+        //重複するruleを排除するため、LinkedHashSetを使う。
+        LinkedHashSet<String> ruleList = new LinkedHashSet<>();
         ArrayList<String> routeList = new ArrayList<>();
 
         try { //ip rule list
@@ -255,7 +260,7 @@ public class checkStatusActivity extends AppCompatActivity {
             // Executes the command.
             for(String rule: ruleList)
             {
-                routeList.add("Rule Table " + rule);
+                routeList.add("> > > Rule6 Table " + rule);
 
                 Process process = Runtime.getRuntime().exec("/system/bin/ip -6 route show table " + rule);
 

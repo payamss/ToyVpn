@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ToyVpn</string>
     <string name="app">ToyVPN</string>
-    <string name="address">Server Address:</string>
+    <string name="address">Server Address1:</string>
     <string name="port">Server Port:</string>
     <string name="secret">Shared Secret:</string>
     <string name="connect">Connect!</string>
@@ -10,4 +10,5 @@
     <string name="connected">ToyVPN is connected!</string>
     <string name="disconnected">ToyVPN is disconnected!</string>
     <string name="check">Check status</string>
+    <string name="address2">Server Address2:</string>
 </resources>

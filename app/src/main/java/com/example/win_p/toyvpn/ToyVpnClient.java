@@ -13,6 +13,7 @@ public class ToyVpnClient extends Activity {
     public interface Prefs {
         String NAME = "connection";
         String SERVER_ADDRESS = "server.address";
+        String SERVER_ADDRESS2 = "server.address2";
         String SERVER_PORT = "server.port";
         String SHARED_SECRET = "shared.secret";
     }
@@ -21,10 +22,12 @@ public class ToyVpnClient extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toy_vpn_client);
         final TextView serverAddress = (TextView) findViewById(R.id.address);
+        final TextView serverAddress2 = (TextView) findViewById(R.id.address2);
         final TextView serverPort = (TextView) findViewById(R.id.port);
         final TextView sharedSecret = (TextView) findViewById(R.id.secret);
         final SharedPreferences prefs = getSharedPreferences(Prefs.NAME, MODE_PRIVATE);
         serverAddress.setText(prefs.getString(Prefs.SERVER_ADDRESS, ""));
+        serverAddress2.setText(prefs.getString(Prefs.SERVER_ADDRESS2, ""));
         serverPort.setText(prefs.getString(Prefs.SERVER_PORT, ""));
         sharedSecret.setText(prefs.getString(Prefs.SHARED_SECRET, ""));
         findViewById(R.id.connect).setOnClickListener(new View.OnClickListener() {
@@ -32,6 +35,7 @@ public class ToyVpnClient extends Activity {
             public void onClick(View view) {
                 prefs.edit()
                         .putString(Prefs.SERVER_ADDRESS, serverAddress.getText().toString())
+                        .putString(Prefs.SERVER_ADDRESS2, serverAddress2.getText().toString())
                         .putString(Prefs.SERVER_PORT, serverPort.getText().toString())
                         .putString(Prefs.SHARED_SECRET, sharedSecret.getText().toString())
                         .commit();
